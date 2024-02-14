@@ -1,0 +1,21 @@
+{
+    "name": "joetannenbaum/chewie",
+    "version": "0.1.0",
+    "require": {
+        "laravel/prompts": "^0.1.15"
+    },
+    "require-dev": {
+        "pestphp/pest": "^2.33",
+        "tightenco/duster": "^2.7"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Chewie\\": "src"
+        }
+    }
+}
