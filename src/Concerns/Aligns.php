@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 
 trait Aligns
 {
-    protected function centerHorizontally(string|iterable $lines, int $width): Collection
+    protected function centerHorizontally(string|iterable $lines, int $width, string $spacingChar = ' '): Collection
     {
         $lines = $this->toCollection($lines);
 
@@ -17,19 +17,19 @@ trait Aligns
 
         $basePadding = floor(($width - $maxLineLength) / 2);
 
-        $result = $lines->map(function ($line) use ($basePadding, $maxLineLength) {
+        $result = $lines->map(function ($line) use ($basePadding, $maxLineLength, $spacingChar) {
             $lineLength = mb_strwidth(Util::stripEscapeSequences($line));
             $padding = max($basePadding + floor((($maxLineLength - $lineLength) / 2)), 0);
 
-            return str_repeat(' ', $padding) . $line . str_repeat(' ', $padding);
+            return str_repeat($spacingChar, $padding) . $line . str_repeat($spacingChar, $padding);
         });
 
         $maxLine = $result->max(fn ($line) => mb_strwidth(Util::stripEscapeSequences($line)));
 
-        return $result->map(function ($line) use ($maxLine) {
+        return $result->map(function ($line) use ($maxLine, $spacingChar) {
             $lineLength = mb_strwidth(Util::stripEscapeSequences($line));
 
-            return $line . str_repeat(' ', $maxLine - $lineLength);
+            return $line . str_repeat($spacingChar, $maxLine - $lineLength);
         });
     }
 
@@ -70,9 +70,9 @@ trait Aligns
         return $lines;
     }
 
-    protected function center(string|iterable $lines, int $width, int $height): Collection
+    protected function center(string|iterable $lines, int $width, int $height, string $spacingChar = ' '): Collection
     {
-        return $this->centerVertically($this->centerHorizontally($lines, $width), $height);
+        return $this->centerVertically($this->centerHorizontally($lines, $width, $spacingChar), $height);
     }
 
     protected function toCollection(string|iterable $lines): Collection
@@ -102,5 +102,14 @@ trait Aligns
         }
 
         $this->output .= $newOutput;
+    }
+
+    protected function padVertically(Collection $lines, int $to)
+    {
+        while ($lines->count() < $to) {
+            $lines->push('');
+        }
+
+        return $lines;
     }
 }

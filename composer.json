@@ -15,7 +15,10 @@
     },
     "autoload": {
         "psr-4": {
-            "Chewie\\": "src"
-        }
+            "Chewie\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     }
 }

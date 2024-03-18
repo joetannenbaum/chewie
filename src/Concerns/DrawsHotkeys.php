@@ -50,4 +50,9 @@ trait DrawsHotkeys
 
         return $hotkeyLines;
     }
+
+    protected function hotkeyLines()
+    {
+        return collect($this->hotkeys())->map($this->line(...));
+    }
 }

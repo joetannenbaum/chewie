@@ -71,7 +71,7 @@ class Lines
 
         $lines = $this->lines->map(fn ($col) => collect($col))->map(function (Collection $col) use ($max) {
             $maxLength = $col->max(fn ($l) => mb_strlen(Util::stripEscapeSequences($l)));
-            $spaces = str_repeat(' ', $maxLength);
+            $spaces = str_repeat(' ', $maxLength ?? 0);
 
             if (in_array($this->align, ['top', 'bottom'])) {
                 // Make sure all lines have the same length
@@ -101,6 +101,12 @@ class Lines
             return $col;
         });
 
-        return collect($lines->shift())->zip(...$lines)->map(fn ($l) => $l->implode($between));
+        $result = collect($lines->shift());
+
+        if ($lines->isEmpty()) {
+            return $result;
+        }
+
+        return $result->zip(...$lines)->map(fn ($line) => $line->implode($between));
     }
 }

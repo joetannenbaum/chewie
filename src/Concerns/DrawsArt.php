@@ -2,13 +2,14 @@
 
 namespace Chewie\Concerns;
 
+use Chewie\Art;
 use Illuminate\Support\Collection;
 
-trait DrawsAscii
+trait DrawsArt
 {
-    protected function asciiLines(string $path): Collection
+    protected function artLines(string $path): Collection
     {
-        $lines = collect(explode(PHP_EOL, file_get_contents(storage_path('ascii/' . $path . '.txt'))));
+        $lines = collect(explode(PHP_EOL, Art::get($path)));
 
         $longest = $lines->map(fn ($line) => mb_strwidth($line))->max();
 

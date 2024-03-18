@@ -6,7 +6,7 @@ trait CreatesAnAltScreen
 {
     public function createAltScreen()
     {
-        if (env('NO_ALT_SCREEN')) {
+        if (getenv('NO_ALT_SCREEN')) {
             return;
         }
 
@@ -16,11 +16,17 @@ trait CreatesAnAltScreen
 
     public function exitAltScreen()
     {
-        if (env('NO_ALT_SCREEN')) {
+        if (getenv('NO_ALT_SCREEN')) {
             return;
         }
 
         // tput rmcup
         static::output()->write("\e[?1049l");
+    }
+
+    public function __destruct()
+    {
+        parent::__destruct();
+        $this->exitAltScreen();
     }
 }

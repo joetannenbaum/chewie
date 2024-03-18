@@ -154,8 +154,6 @@ class KeyPressListener
 
     public function listen()
     {
-        $this->listenForQuit();
-
         $this->prompt->on('key', fn ($key) => $this->handleKey($key));
     }
 
@@ -177,15 +175,15 @@ class KeyPressListener
         foreach (mb_str_split($key) as $key) {
             foreach ($this->regular as $regular => $callback) {
                 if ($key === $regular) {
-                    $callback();
+                    $callback($key);
 
                     return;
                 }
             }
-        }
 
-        if (isset($this->wildcardCallback) && ord($key) >= 32) {
-            ($this->wildcardCallback)($key);
+            if (isset($this->wildcardCallback) && ord($key) >= 32) {
+                ($this->wildcardCallback)($key);
+            }
         }
     }
 

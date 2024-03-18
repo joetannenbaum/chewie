@@ -4,9 +4,9 @@ namespace Chewie\Concerns;
 
 use Chewie\Theme;
 
-trait RegistersThemes
+trait RegistersRenderers
 {
-    public function registerTheme(?string $renderer = null, string $theme = 'default'): void
+    public function registerRenderer(?string $renderer, string $theme = 'default'): void
     {
         $class = basename(str_replace('\\', '/', static::class));
 

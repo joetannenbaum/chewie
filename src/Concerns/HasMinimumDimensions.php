@@ -5,7 +5,7 @@ namespace Chewie\Concerns;
 trait HasMinimumDimensions
 {
     use Aligns;
-    use DrawsAscii;
+    use DrawsArt;
 
     protected function minDimensions(callable $render, int $width = 0, int $height = 0): string
     {
@@ -57,7 +57,7 @@ trait HasMinimumDimensions
     protected function renderTooSmall(array $lines, int $termWidth, int $termHeight): string
     {
         $this->center(
-            $this->asciiLines('cli-lab')
+            $this->artLines('cli-lab')
                 ->map(fn ($line) => $this->cyan($line))
                 ->push('')
                 ->push('')
