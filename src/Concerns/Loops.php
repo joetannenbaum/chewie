@@ -2,6 +2,7 @@
 
 namespace Chewie\Concerns;
 
+use Carbon\CarbonInterval;
 use Chewie\Contracts\Loopable;
 
 trait Loops
@@ -32,8 +33,12 @@ trait Loops
         $this->loopables = [];
     }
 
-    protected function loop($cb, int $sleepFor = 50_000)
+    protected function loop($cb, int|CarbonInterval $sleepFor = 50_000)
     {
+        if ($sleepFor instanceof CarbonInterval) {
+            $sleepFor = $sleepFor->totalMicroseconds;
+        }
+
         $this->sleepBetweenLoops = $sleepFor;
 
         while (true) {

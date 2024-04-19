@@ -12,6 +12,8 @@ class Lines
 
     protected string $spacingCharacter = ' ';
 
+    protected string $paddingCharacter = ' ';
+
     protected $align = 'top';
 
     public function __construct(protected Collection $lines)
@@ -59,6 +61,13 @@ class Lines
         return $this;
     }
 
+    public function paddingCharacter(string $paddingCharacter): static
+    {
+        $this->paddingCharacter = $paddingCharacter;
+
+        return $this;
+    }
+
     public function lines(): Collection
     {
         if ($this->lines->count() === 1) {
@@ -71,7 +80,7 @@ class Lines
 
         $lines = $this->lines->map(fn ($col) => collect($col))->map(function (Collection $col) use ($max) {
             $maxLength = $col->max(fn ($l) => mb_strlen(Util::stripEscapeSequences($l)));
-            $spaces = str_repeat(' ', $maxLength ?? 0);
+            $spaces = str_repeat($this->paddingCharacter, $maxLength ?? 0);
 
             if (in_array($this->align, ['top', 'bottom'])) {
                 // Make sure all lines have the same length
@@ -79,7 +88,7 @@ class Lines
                     $length = mb_strlen(Util::stripEscapeSequences($l));
 
                     if ($length < $maxLength) {
-                        $l .= str_repeat(' ', $maxLength - $length);
+                        $l .= str_repeat($this->paddingCharacter, $maxLength - $length);
                     }
 
                     return $l;

@@ -12,4 +12,22 @@ trait CapturesOutput
 
         return $output;
     }
+
+    protected function captureOutput(callable $callback)
+    {
+        $output = $this->captureAndResetOutput();
+
+        $callback();
+
+        $result = $this->output;
+
+        $this->output = $output;
+
+        return $result;
+    }
+
+    protected function currentLineCount(): int
+    {
+        return substr_count($this->output, PHP_EOL);
+    }
 }

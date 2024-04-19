@@ -36,7 +36,10 @@ trait SetsUpAndResets
 
                 $cb();
             } catch (Throwable $e) {
-                $this->exitAltScreen();
+                if (method_exists($this, 'exitAltScreen')) {
+                    $this->exitAltScreen();
+                }
+
                 throw $e;
             }
         } finally {
