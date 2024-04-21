@@ -11,7 +11,7 @@ class KeyPressListener
 
     protected array $escape = [];
 
-    protected $wildcardCallback;
+    protected $wildcards = [];
 
     public function __construct(protected Prompt $prompt)
     {
@@ -39,6 +39,10 @@ class KeyPressListener
     public function clearExisting(): static
     {
         $this->prompt->clearListeners();
+
+        $this->regular = [];
+        $this->escape = [];
+        $this->wildcards = [];
 
         return $this;
     }
@@ -118,7 +122,7 @@ class KeyPressListener
 
     public function wildcard(callable $cb): static
     {
-        $this->wildcardCallback = $cb;
+        $this->wildcards[] = $cb;
 
         return $this;
     }
@@ -181,8 +185,10 @@ class KeyPressListener
                 }
             }
 
-            if (isset($this->wildcardCallback) && ord($key) >= 32) {
-                ($this->wildcardCallback)($key);
+            foreach ($this->wildcards as $wildcardCallback) {
+                if (ord($key) >= 32) {
+                    $wildcardCallback($key);
+                }
             }
         }
     }
