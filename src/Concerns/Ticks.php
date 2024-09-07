@@ -19,6 +19,11 @@ trait Ticks
         $this->tickCount++;
     }
 
+    public function onTick(): void
+    {
+        //
+    }
+
     protected function isNthTick(int $n): bool
     {
         return $this->tickCount % $n === 0;

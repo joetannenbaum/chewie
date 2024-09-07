@@ -36,6 +36,15 @@ class KeyPressListener
         }
     }
 
+    public function listenNow()
+    {
+        while (($key = $this->prompt->terminal()->read()) !== null) {
+            if ($this->handleKey($key) === false) {
+                break;
+            }
+        }
+    }
+
     public function clearExisting(): static
     {
         $this->prompt->clearListeners();
@@ -166,9 +175,7 @@ class KeyPressListener
         if ($this->isEscape($key)) {
             foreach ($this->escape as $escape => $callback) {
                 if ($key === $escape) {
-                    $callback();
-
-                    return;
+                    return $callback();
                 }
             }
 
@@ -179,15 +186,13 @@ class KeyPressListener
         foreach (mb_str_split($key) as $key) {
             foreach ($this->regular as $regular => $callback) {
                 if ($key === $regular) {
-                    $callback($key);
-
-                    return;
+                    return $callback($key);
                 }
             }
 
             foreach ($this->wildcards as $wildcardCallback) {
                 if (ord($key) >= 32) {
-                    $wildcardCallback($key);
+                    return $wildcardCallback($key);
                 }
             }
         }

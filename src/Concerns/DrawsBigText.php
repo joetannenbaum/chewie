@@ -11,7 +11,7 @@ trait DrawsBigText
 
     protected string $fontDir = '';
 
-    public function bigText(string $message): Collection
+    public function bigText(string $message, $spacing = 0): Collection
     {
         $characterWidth = mb_strwidth($this->artLines($this->fontPath('a'))->first());
 
@@ -41,7 +41,7 @@ trait DrawsBigText
                         });
                     }),
             )
-            ->map(fn ($letters) => Lines::fromColumns($letters)->spacing(1)->lines())
+            ->map(fn ($letters) => Lines::fromColumns($letters)->spacing($spacing)->lines())
             ->flatMap(fn ($lines, $index) => $index === 0 ? $lines : $lines->prepend(''));
     }
 
