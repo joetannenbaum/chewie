@@ -165,14 +165,47 @@ class KeyPressListener
         return $this->on([Key::LEFT, Key::LEFT_ARROW], $callback);
     }
 
+    public function onMouseMove(callable $callback): static
+    {
+        return $this->on(Mouse::MOVE, $callback);
+    }
+
+    public function onMouseClick(callable $callback): static
+    {
+        return $this->on(Mouse::CLICK, $callback);
+    }
+
+    public function onMouseDrag(callable $callback): static
+    {
+        return $this->on(Mouse::DRAG, $callback);
+    }
+
     public function listen()
     {
-        $this->prompt->on('key', fn ($key) => $this->handleKey($key));
+        $this->prompt->on('key', fn($key) => $this->handleKey($key));
     }
 
     protected function handleKey($key)
     {
         if ($this->isEscape($key)) {
+            $parts = mb_str_split($key);
+
+            if (count($parts) === 6 && $parts[2] === 'M') {
+                $y = ord(array_pop($parts)) - 32;
+                $x = ord(array_pop($parts)) - 32;
+                $button = array_pop($parts);
+
+                $action = match ($button) {
+                    '@' => Mouse::CLICK,
+                    '#' => Mouse::DRAG,
+                    default => Mouse::MOVE,
+                };
+
+                if (isset($this->regular[$action])) {
+                    $this->regular[$action]($x, $y);
+                }
+            }
+
             foreach ($this->escape as $escape => $callback) {
                 if ($key === $escape) {
                     return $callback();
