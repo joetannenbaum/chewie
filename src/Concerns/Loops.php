@@ -23,6 +23,11 @@ trait Loops
         $this->loopables[] = $component;
     }
 
+    protected function removeLoopable(Loopable $component): void
+    {
+        $this->loopables = array_filter($this->loopables, fn($loopable) => $loopable !== $component);
+    }
+
     protected function registerLoopables(Loopable ...$components): void
     {
         $this->loopables = array_merge($this->loopables, $components);
