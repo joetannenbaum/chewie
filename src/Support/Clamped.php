@@ -13,23 +13,23 @@ class Clamped
         protected $maxValue = null,
         protected $value = null
     ) {
-        $this->value ??= $this->minValue;
+        $this->value ??= $this->minValue ?? $this->maxValue;
     }
 
     public function increase($by = 1)
     {
-        $this->value = min($this->maxValue, $this->value + $by);
+        $this->value = min($this->maxValue ?? INF, $this->value + $by);
 
-        if ($this->value === $this->maxValue) {
+        if ($this->maxCallback && $this->value === $this->maxValue) {
             ($this->maxCallback)();
         }
     }
 
     public function decrease($by = 1)
     {
-        $this->value = max($this->minValue, $this->value - $by);
+        $this->value = max($this->minValue ?? -INF, $this->value - $by);
 
-        if ($this->value === $this->minValue) {
+        if ($this->minCallback && $this->value === $this->minValue) {
             ($this->minCallback)();
         }
     }
