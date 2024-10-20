@@ -121,6 +121,16 @@ class Animatable
         return $this->value !== $this->nextValue || $this->pauseFor > 0;
     }
 
+    public function isAtLowerLimit(): bool
+    {
+        return $this->value === $this->lowerLimit;
+    }
+
+    public function isAtUpperLimit(): bool
+    {
+        return $this->value === $this->upperLimit;
+    }
+
     public function to(int|float $value): void
     {
         if ($this->value === $value) {
