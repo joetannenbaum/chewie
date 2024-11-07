@@ -1,8 +1,8 @@
 {
     "name": "joetannenbaum/chewie",
-    "version": "0.1.7",
+    "version": "0.1.8",
     "require": {
-        "laravel/prompts": "^0.1.15"
+        "laravel/prompts": "0.1.x"
     },
     "require-dev": {
         "pestphp/pest": "^2.33",
