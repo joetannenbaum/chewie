@@ -2,7 +2,7 @@
     "name": "joetannenbaum/chewie",
     "version": "0.1.8",
     "require": {
-        "laravel/prompts": "0.1.x"
+        "laravel/prompts": "0.x"
     },
     "require-dev": {
         "pestphp/pest": "^2.33",
