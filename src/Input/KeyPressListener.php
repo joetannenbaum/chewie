@@ -13,6 +13,8 @@ class KeyPressListener
 
     protected $wildcards = [];
 
+    protected $afterEveryKey = null;
+
     public function __construct(protected Prompt $prompt)
     {
         //
@@ -36,11 +38,22 @@ class KeyPressListener
         }
     }
 
+    public function afterEveryKey(callable $callback): static
+    {
+        $this->afterEveryKey = $callback;
+
+        return $this;
+    }
+
     public function listenNow()
     {
         while (($key = $this->prompt->terminal()->read()) !== null) {
             if ($this->handleKey($key) === false) {
                 break;
+            }
+
+            if ($this->afterEveryKey) {
+                ($this->afterEveryKey)();
             }
         }
     }
