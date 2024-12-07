@@ -1,6 +1,6 @@
 {
     "name": "joetannenbaum/chewie",
-    "version": "0.1.9",
+    "version": "0.1.10",
     "require": {
         "laravel/prompts": "0.x"
     },
