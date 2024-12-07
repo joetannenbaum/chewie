@@ -225,7 +225,9 @@ class KeyPressListener
 
             foreach ($this->wildcards as $wildcardCallback) {
                 if (ord($key) >= 32) {
-                    return $wildcardCallback($key);
+                    if ($wildcardCallback($key) === false) {
+                        return false;
+                    }
                 }
             }
         }
