@@ -121,6 +121,11 @@ class Animatable
         return $this->value !== $this->nextValue || $this->pauseFor > 0;
     }
 
+    public function isDelaying(): bool
+    {
+        return $this->delay > 0;
+    }
+
     public function isAtLowerLimit(): bool
     {
         return $this->value === $this->lowerLimit;
