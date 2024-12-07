@@ -67,6 +67,7 @@ You can easily print ASCII art from a file out to the terminal in your renderer:
 
 ```php
 use Chewie\Concerns\DrawsArt;
+use Laravel\Prompts\Themes\Default\Renderer;
 
 class DemoRenderer extends Renderer
 {
@@ -102,6 +103,7 @@ which allows you to simplify the `artLines` call to:
 
 ```php
 use Chewie\Concerns\DrawsArt;
+use Laravel\Prompts\Themes\Default\Renderer;
 
 class DemoRenderer extends Renderer
 {
@@ -122,6 +124,7 @@ Chewie comes with methods that help align content within the terminal.
 
 ```php
 use Chewie\Concerns\Aligns;
+use Laravel\Prompts\Themes\Default\Renderer;
 
 class DemoRenderer extends Renderer
 {
