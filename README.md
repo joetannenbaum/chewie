@@ -1,3 +1,5 @@
+<img src="./docs/chewie.jpg" alt="Chewie" />
+
 # Chewie
 
 Chewie is a package that helps you build text-based user interfaces (TUIs) with [Laravel Prompts](https://laravel.com/docs/prompts). It helps to reduce some of the boilerplate code and adds some helpers for alignment, animation, and more.
